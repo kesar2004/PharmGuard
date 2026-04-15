@@ -1,0 +1,9 @@
+python scripts\ingest_paper.pylangchain-google-genai
+langgraph
+neo4j
+pinecone-client
+requests
+pandas
+python-dotenv
+streamlit
+pyvispip install pydantic

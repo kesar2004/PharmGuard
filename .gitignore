@@ -1,0 +1,11 @@
+# Credentials
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.ipynb_checkpoints/
+
+# System
+.DS_Store

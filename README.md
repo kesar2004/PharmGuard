@@ -33,6 +33,46 @@ PharmGuard utilizes a hybrid architecture combining a Knowledge Graph for struct
 
 **System Flow:** User Input ➔ Entity Resolution ➔ Neo4j Path Query ➔ Pinecone Context Retrieval ➔ Multi-Agent Reasoning ➔ Peer-Review Validation ➔ Final Output  
 
+graph TD
+    %% User Input
+    U[User Input: Drug Query] --&gt; R(Entity Resolver)
+    
+   ```mermaid
+graph TD
+    %% User Input
+    U[User Input: Drug Query] --> R(Entity Resolver)
+    
+    %% LangGraph Orchestrator
+    R --> O{LangGraph Orchestrator}
+    
+    %% Databases
+    O -->|Mechanistic Query| N[(Neo4j Graph)]
+    O -->|Semantic Search| P[(Pinecone Vector DB)]
+    
+    %% Data Retrieval
+    N -->|Pathways| M[Biological Paths]
+    P -->|PMID Abstracts| L[PubMed Literature]
+    
+    %% Multi-Agent Workflow
+    M --> A1[🤖 Reasoner Agent]
+    L --> A1
+    
+    A1 -->|Draft Report| A2[⚖️ Validator Agent]
+    
+    %% Validation Loop
+    A2 -->|Rejects Uncited Claims| A1
+    A2 -->|Approves Grounded Claims| F[✅ Final Risk Report]
+    
+    %% Styling
+    classDef database fill:#f9f6f6,stroke:#333,stroke-width:2px;
+    classDef agent fill:#e1f5fe,stroke:#03a9f4,stroke-width:2px;
+    classDef success fill:#e8f5e9,stroke:#4caf50,stroke-width:2px;
+    
+    class N,P database;
+    class A1,A2 agent;
+    class F success;
+```
+
 ---
 
 ##  Tech Stack
@@ -53,6 +93,29 @@ PharmGuard utilizes a hybrid architecture combining a Knowledge Graph for struct
 3. **Retrieval:** The system performs a semantic search in Pinecone to find relevant peer-reviewed studies discussing the drug’s effects.  
 4. **Synthesis:** The Reasoner Agent compares the official SIDER labels with the retrieved literature and the biological pathway.  
 5. **Validation:** The Validator Agent audits the report. If a claim isn't supported by a PMID or a graph path, the report is rejected and sent back for correction.  
+
+
+```mermaid
+erDiagram
+    DRUG {
+        string cid "PubChem ID"
+        string name "Canonical Name"
+    }
+    PROTEIN {
+        string name "Target Enzyme/Receptor"
+    }
+    ORGAN {
+        string name "Tissue Expression"
+    }
+    SIDE_EFFECT {
+        string name "SIDER Clinical Event"
+    }
+
+    %% Relationships
+    DRUG ||--o{ PROTEIN : "[:TARGETS]"
+    DRUG ||--o{ SIDE_EFFECT : "[:KNOWN_TO_CAUSE]"
+    PROTEIN ||--|{ ORGAN : "[:EXPRESSED_IN]"
+```
 
 ---
 

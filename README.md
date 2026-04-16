@@ -1,4 +1,4 @@
-# [View Demo Video on LinkedIn](ADD_YOUR_LINKEDIN_VIDEO_URL_HERE)
+# [View Demo Video on LinkedIn](https://www.linkedin.com/posts/kesar-tripathi-364126285_graphrag-drugsafety-pharmacovigilance-activity-7450287100861620224-Q-u9?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEVAaHwB0PYWh0u0WLGMGRw9Rnrqfzmh8Gc)
 
 # PharmGuard  
 Agentic GraphRAG for Automated Pharmaceutical Risk Intelligence
